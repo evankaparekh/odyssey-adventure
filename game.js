@@ -185,8 +185,8 @@
     if(biome==="cave"){ellipse(741,139,78,53,"#28333e");ellipse(741,139,62,46,"#101b28");ellipse(741,139,14,23,"#f29e62");}
     if(biome==="dark"){for(let i=0;i<16;i++){ellipse(100+rand(i)*800,120+rand(i+60)*350,1.5,1.5,"#bca9e1");}}
     // Gold objective markers; later ones are visible as unlit waystones.
-    s.objectives.forEach((task,i)=>drawMarker(spots[i],i<state.step?"done":i===state.step?"main":"locked",i+1,brief(task,22),t));
-    if(s.side)drawMarker(sideSpot,state.side[s.id]?"done":"side","✧",brief(s.side.name,20),t);
+    s.objectives.forEach((task,i)=>{if(i===state.step)drawNPC(spots[i].x+48,spots[i].y+10,i,t,"main");drawMarker(spots[i],i<state.step?"done":i===state.step?"main":"locked",i+1,brief(task,22),t);});
+    if(s.side){if(!state.side[s.id])drawNPC(sideSpot.x+47,sideSpot.y-4,4,t,"side");drawMarker(sideSpot,state.side[s.id]?"done":"side","✧",brief(s.side.name,20),t);}
     drawShip(gate.x,gate.y,p,state.step>=s.objectives.length,t);
     drawPlayer(hero.x,hero.y,state.scene===0,t);
     const vignette=ctx.createRadialGradient(490,270,110,500,280,610);vignette.addColorStop(0,"#00000000");vignette.addColorStop(1,"#03111a8a");ctx.fillStyle=vignette;ctx.fillRect(0,0,W,H);
@@ -214,6 +214,17 @@
     ctx.fillStyle=ready?"#f1dbac":"#c3c2a5";ctx.beginPath();ctx.moveTo(x+2,y-62);ctx.lineTo(x+2,y+1);ctx.lineTo(x+41,y-23);ctx.closePath();ctx.fill();
     ctx.fillStyle="#dec482";ctx.font="bold 13px Georgia";ctx.textAlign="center";ctx.fillText(ready?(state.scene===18?"FINISH":"SAIL ON"):"LOCKED",x,y+49);ctx.globalAlpha=1;
     if(ready){ctx.globalAlpha=.35+.22*Math.sin(t*3);ctx.strokeStyle=p.accent;ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y-8,53,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1;}
+  }
+  function drawNPC(x,y,type,t,role){
+    const bob=Math.sin(t*1.9+type)*2;
+    ellipse(x+2,y+16,15,5,"#04172277");
+    ctx.fillStyle=role==="side"?"#8e6ca3":"#38717c";
+    ctx.beginPath();ctx.moveTo(x-11,y-12+bob);ctx.lineTo(x+11,y-12+bob);ctx.lineTo(x+14,y+15+bob);ctx.lineTo(x-14,y+15+bob);ctx.closePath();ctx.fill();
+    rounded(x-7,y+11+bob,5,10,1,"#453631");rounded(x+3,y+11+bob,5,10,1,"#453631");
+    ellipse(x,y-22+bob,10,11,"#dfb78c");
+    ctx.fillStyle="#44382f";ctx.beginPath();ctx.arc(x,y-28+bob,10,Math.PI,Math.PI*2);ctx.fill();
+    ctx.fillStyle=role==="side"?"#ead2ff":"#c6ebed";ctx.font="bold 10px Arial";ctx.textAlign="center";
+    ctx.fillText(role==="side"?"SIDE STORY":"COMPANION",x,y-47+bob);
   }
   function drawPlayer(x,y,isTele,t){
     const sway=Math.sin(t*8)*2;ellipse(x,y+17,20,7,"#0415228a");
