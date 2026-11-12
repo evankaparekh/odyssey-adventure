@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#09141f">
+  <meta name="description" content="The Odyssey: an interactive mythological adventure through 18 locations, adapted from Group D's original script.">
+  <title>THE ODYSSEY | Journey Home</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="loading" class="loading"><div class="sun-symbol">✹</div><p>CALLING UPON THE MUSES...</p></div>
+  <div id="app" class="app hidden">
+    <header class="topbar">
+      <div class="brand"><span class="brand-emblem">✹</span><div><div class="eyebrow">GROUP D PRESENTS</div><div class="wordmark">THE ODYSSEY</div></div></div>
+      <div class="voyage"><span class="eyebrow" id="chapterCounter">PROLOGUE · 0 / 18</span><div class="meter"><div id="progressBar"></div></div></div>
+      <div class="top-actions"><button id="soundBtn" class="icon-btn" aria-label="Toggle sound" title="Toggle sound">♫</button><button id="mapBtn" class="text-btn">☷ <span>VOYAGE MAP</span></button><button id="journalBtn" class="text-btn">▤ <span>STORY JOURNAL</span></button></div>
+    </header>
+    <main class="layout">
+      <section class="world-panel">
+        <div class="world-heading"><div class="eyebrow">YOU ARE EXPLORING</div><h1 id="worldName">ITHACA</h1><div id="worldSubtitle" class="world-subtitle"></div></div>
+        <div class="world-frame">
+          <canvas id="world" width="1000" height="560" aria-label="Adventure map. Use WASD or arrow keys to move; E to interact." tabindex="0"></canvas>
+          <div class="map-corner"><span class="sparkle">✦</span><span id="weatherLabel">AEGEAN COAST</span></div>
+          <div class="controls-tag">MOVE <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> <span class="sep">·</span> INTERACT <kbd>E</kbd></div>
+          <div class="mobile-pad" aria-label="Touch movement controls"><button data-move="up" aria-label="Move up">▲</button><div><button data-move="left" aria-label="Move left">◀</button><button data-move="down" aria-label="Move down">▼</button><button data-move="right" aria-label="Move right">▶</button></div></div>
+        </div>
+        <div class="bottom-bar"><div class="nearby"><span class="pulse"></span><div><div class="eyebrow">NEARBY</div><strong id="nearbyLabel">Explore the island</strong></div></div><button id="interactBtn" class="primary-btn" disabled>GET CLOSER TO INTERACT <span>↵</span></button></div>
+      </section>
+      <aside class="sidebar">
+        <div class="sidebar-top"><div class="eyebrow">YOUR CURRENT MISSION</div><div class="quest-icon">⚔</div></div>
+        <h2 id="questName">THE ABSENT KING</h2><p class="quest-desc" id="questDescription"></p>
+        <div class="section-label"><span>MAIN QUEST</span><span id="questCount">0 / 3</span></div>
+        <div id="objectives" class="objective-list"></div>
+        <div class="side-box"><div class="eyebrow">✧ OPTIONAL SIDE QUEST</div><h3 id="sideTitle"></h3><p id="sideDescription"></p><div id="sideStatus" class="side-status">FIND THE PURPLE MARKER</div></div>
+        <div class="sidebar-footer"><div><div class="eyebrow">YOUR COMPANIONS</div><strong id="crewStatus">THE CREW OF ITHACA</strong></div><span class="crest">⌁</span></div>
+      </aside>
+    </main>
+    <footer class="footer"><span>AN INTERACTIVE RETELLING OF HOMER'S <em>ODYSSEY</em></span><span id="saveStatus">PROGRESS SAVED AUTOMATICALLY</span><button id="helpBtn">HOW TO PLAY ?</button><button id="resetBtn">RESTART</button></footer>
+  </div>
+
+  <div id="dialogueOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="dialogueTitle">
+    <div class="dialogue-card">
+      <div class="dialogue-header"><span id="dialogueKicker" class="eyebrow">A SCENE UNFOLDS</span><button id="dialogueClose" class="close-btn" aria-label="Close dialogue">✕</button></div>
+      <div class="dialogue-main"><div class="dialogue-sigil" id="dialogueSigil">✦</div><h2 id="dialogueTitle">THE JOURNEY</h2><div class="dialogue-ornament">────────── ✧ ──────────</div><div id="dialogueSpeaker" class="speaker"></div><p id="dialogueText"></p><div id="dialogueChoices" class="choices hidden"></div></div>
+      <div class="dialogue-bottom"><span id="dialoguePage" class="eyebrow">01 / 03</span><button class="primary-btn" id="dialogueNext">CONTINUE <span>→</span></button></div>
+    </div>
+  </div>
+
+  <div id="panelOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="panelTitle">
+    <div class="panel-card"><div class="panel-head"><div><div id="panelKicker" class="eyebrow">THE VOYAGE</div><h2 id="panelTitle">STORY JOURNAL</h2></div><button id="panelClose" class="close-btn" aria-label="Close panel">✕</button></div><div id="panelContent" class="panel-content"></div></div>
+  </div>
+
+  <div id="startScreen" class="start-screen hidden">
+    <div class="stars"></div><div class="menu-inner"><div class="menu-icon">✹</div><div class="eyebrow">GROUP D · AN INTERACTIVE ADAPTATION</div><h1>THE<br><span>ODYSSEY</span></h1><div class="rule">✦ &nbsp; A JOURNEY OF 20 YEARS &nbsp; ✦</div><p>One king. Eighteen destinations. A promise to get home.<br>Walk the islands, meet the people, and make the choices that shape the voyage.</p><button class="primary-btn start-btn" id="startBtn">BEGIN THE VOYAGE &nbsp; →</button><button id="continueBtn" class="continue-btn hidden">CONTINUE YOUR JOURNEY</button><div class="menu-foot">BASED ON THE ORIGINAL GROUP D SCRIPT · BUILT FOR THE BROWSER</div></div>
+  </div>
+  <script src="game.js" defer></script>
+</body>
+</html>
